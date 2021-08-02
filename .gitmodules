@@ -2,3 +2,9 @@
 	path = NEMO-Corpus
 	url = https://github.com/OnlpLab/NEMO-Corpus.git
 	branch = main
+[submodule "yap"]
+	path = yap
+	url = https://github.com/OnlpLab/yap.git
+[submodule "bclm"]
+	path = bclm
+	url = https://github.com/OnlpLab/bclm.git
