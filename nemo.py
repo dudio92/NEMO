@@ -18,7 +18,7 @@ def read_text_file(path):
         for line in f:
             if line.strip():
                 toks = bclm.tokenize(line.rstrip())
-            sents.append(toks)
+                sents.append(toks)
     return sents
 
 
