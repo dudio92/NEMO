@@ -153,6 +153,19 @@ for model in available_models:
     m['data'] = get_ncrf_data_object(model)
     m['model'] = load_ncrf_model(m['data'])
     loaded_models[model] = m
+
+def load_all_models():
+    # load all models
+    available_models = ['token-single', 'token-multi', 'morph']
+    loaded_models = {}
+    for model in available_models:
+        m = {}
+        m['data'] = get_ncrf_data_object(model)
+        m['model'] = load_ncrf_model(m['data'])
+        loaded_models[model] = m
+    return loaded_models
+
+
     
 
 app = FastAPI()
@@ -176,6 +189,16 @@ def run_ner_model(sentences: str, model_name: str, tokenized: Optional[bool] = F
         }
     else:
         return {'error': f'model name "{model_name}" unavailable'}
+
+def run_ner_model_direct(sentences: str, model_name: str, model: dict,  tokenized: Optional[bool] = False,):
+    with Temp() as temp_input:
+        tok_sents = create_input_file(sentences, temp_input.name, tokenized)
+        preds = ncrf_decode(model['model'], model['data'], temp_input.name)
+    return {
+        'tokenized_text': tok_sents,
+        'nemo_predictions': preds,
+        'sentences_number': len(tok_sents)
+    }
 
 
 @app.get("/multi_align_hybrid/")
