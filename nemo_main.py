@@ -1,5 +1,5 @@
 import requests
-from api_main import run_ner_model, run_ner_model_direct, load_all_models
+from NEMO.api_main import run_ner_model, run_ner_model_direct, load_all_models
 
 texts = [
     'לייבניץ היה מתמטיקאי ופילוסוף.\n מרטין היידיגר התכתב עם חנה ארדנט.\n פילוסופיה היא שאלה',
