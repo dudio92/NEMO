@@ -1,11 +1,11 @@
 import requests
 from NEMO.api_main import run_ner_model, run_ner_model_direct, load_all_models
-
+from NEMO.utils.singleton import Singleton
 texts = [
     'לייבניץ היה מתמטיקאי ופילוסוף.\n מרטין היידיגר התכתב עם חנה ארדנט.\n פילוסופיה היא שאלה',
 ]
 
-class NemoHebrewNer:
+class NemoHebrewNer(metaclass=Singleton):
     def __init__(self):
         self.loaded_models = load_all_models()
 
