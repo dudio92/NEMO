@@ -18,6 +18,8 @@ class NemoHebrewNer(metaclass=Singleton):
 
         vanilla_ner_model_result = run_ner_model_direct(text_input, model=self.loaded_models['token-multi'],
                                                         model_name='token-multi')
+        print('vanilla_ner_model_result', vanilla_ner_model_result)
+
         # text_entity_tuple_list_v = list(zip(vanilla_ner_model_result['tokenized_text'][0], vanilla_ner_model_result['nemo_predictions'][0]))
         text_entity_tuple_list = [list(zip(vanilla_ner_model_result['tokenized_text'][i],
                                            vanilla_ner_model_result['nemo_predictions'][i]))
