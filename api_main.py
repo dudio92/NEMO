@@ -40,12 +40,12 @@ def load_ncrf_model(data):
     return model
 
 
-def ncrf_decode(model, data, temp_input):
-    data.raw_dir = temp_input
+def ncrf_decode(model, data, file_data):
+    data.raw_dir = file_data
     #data.decode_dir = temp_output
     data.generate_instance('raw')
     _, _, _, _, _, preds, _ = evaluate(data, model, 'raw', data.nbest)
-    if data.nbest==1:
+    if data.nbest == 1:
         preds = [sent[0] for sent in preds]
     return preds
     
@@ -58,9 +58,9 @@ def get_sents(text, tokenized):
     return sents
     
     
-def create_input_file(text, path, tokenized):
+def create_input_file(text, file_data, tokenized):
     sents = get_sents(text, tokenized)
-    nemo.write_tokens_file(sents, path, dummy_o=True)
+    nemo.write_tokens_file(sents, file_data, dummy_o=True)
     return sents
 
 
@@ -190,10 +190,12 @@ def run_ner_model(sentences: str, model_name: str, tokenized: Optional[bool] = F
     else:
         return {'error': f'model name "{model_name}" unavailable'}
 
-def run_ner_model_direct(sentences: str, model_name: str, model: dict,  tokenized: Optional[bool] = False,):
-    with Temp() as temp_input:
-        tok_sents = create_input_file(sentences, temp_input.name, tokenized)
-        preds = ncrf_decode(model['model'], model['data'], temp_input.name)
+
+def run_ner_model_direct(sentences: str, model_name: str, model: dict,  tokenized: Optional[bool] = False):
+    # with Temp() as temp_input:
+    file_data = ''
+    tok_sents = create_input_file(sentences, file_data, tokenized)
+    preds = ncrf_decode(model['model'], model['data'], file_data)
     return {
         'tokenized_text': tok_sents,
         'nemo_predictions': preds,

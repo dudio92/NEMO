@@ -20,7 +20,7 @@ def normalize_word(word):
 
 def read_instance(input_file, word_alphabet, char_alphabet, feature_alphabets, label_alphabet, number_normalized, max_sent_length, sentence_classification=False, split_token='\t', char_padding_size=-1, char_padding_symbol = '</pad>'):
     feature_num = len(feature_alphabets)
-    in_lines = open(input_file,'r', encoding="utf8").readlines()
+    in_lines = input_file.split('\n')
     instence_texts = []
     instence_Ids = []
     words = []

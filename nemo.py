@@ -44,22 +44,21 @@ def read_lattices(lattices):
     return pd.concat(dfs).reset_index(drop=True)
 
 
-def write_tokens_file(sents, file_path, dummy_o=False, only_tokens=False):
-    with open(file_path, 'w', encoding='utf8') as of:
-        for sent in sents:
-            for fields in sent: 
-                if type(fields) is str:
-                    word = fields
-                else:
-                    word = fields[0]
-                if only_tokens:
-                    line = word
-                elif dummy_o:
-                    line = word + ' O'
-                else:
-                    line = word + ' ' + fields[-1]
-                of.write(line + '\n')
-            of.write('\n')
+def write_tokens_file(sents, file_data: str, dummy_o=False, only_tokens=False):
+    for sent in sents:
+        for fields in sent:
+            if type(fields) is str:
+                word = fields
+            else:
+                word = fields[0]
+            if only_tokens:
+                line = word
+            elif dummy_o:
+                line = word + ' O'
+            else:
+                line = word + ' ' + fields[-1]
+            file_data = file_data + (line + '\n')
+        file_data = file_data + '\n'
 
 
 def write_ncrf_conf(conf_path, input_path, output_path, model, dset):
