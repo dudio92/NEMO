@@ -5,7 +5,7 @@ texts = [
     'לייבניץ היה מתמטיקאי ופילוסוף.\n מרטין היידיגר התכתב עם חנה ארדנט.\n פילוסופיה היא שאלה',
 ]
 
-class NemoHebrewNer(metaclass=Singleton):
+class NemoHebrewNer():
     def __init__(self):
         self.loaded_models = load_all_models()
 
