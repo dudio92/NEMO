@@ -60,8 +60,8 @@ def get_sents(text, tokenized):
     
 def create_input_file(text, file_data, tokenized):
     sents = get_sents(text, tokenized)
-    nemo.write_tokens_file(sents, file_data, dummy_o=True)
-    return sents
+    file_data = nemo.write_tokens_file(sents, file_data, dummy_o=True)
+    return sents, file_data
 
 
 ## YAP stuff
@@ -194,7 +194,7 @@ def run_ner_model(sentences: str, model_name: str, tokenized: Optional[bool] = F
 def run_ner_model_direct(sentences: str, model_name: str, model: dict,  tokenized: Optional[bool] = False):
     # with Temp() as temp_input:
     file_data = ''
-    tok_sents = create_input_file(sentences, file_data, tokenized)
+    tok_sents, file_data = create_input_file(sentences, file_data, tokenized)
     preds = ncrf_decode(model['model'], model['data'], file_data)
     return {
         'tokenized_text': tok_sents,

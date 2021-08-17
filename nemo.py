@@ -59,6 +59,7 @@ def write_tokens_file(sents, file_data: str, dummy_o=False, only_tokens=False):
                 line = word + ' ' + fields[-1]
             file_data = file_data + (line + '\n')
         file_data = file_data + '\n'
+    return file_data
 
 
 def write_ncrf_conf(conf_path, input_path, output_path, model, dset):
