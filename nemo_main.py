@@ -15,6 +15,8 @@ class NemoHebrewNer():
         The model will analyze each sentence separately and will extract entities from all sentences.
         '''
         print('get_hebrew_nemo_ner', text_input)
+        if not text_input:
+            return None
 
         vanilla_ner_model_result = run_ner_model_direct(text_input, model=self.loaded_models['token-multi'],
                                                         model_name='token-multi')
