@@ -1,13 +1,12 @@
 import requests
-from NEMO.api_main import run_ner_model, run_ner_model_direct, load_all_models
-from NEMO.utils.singleton import Singleton
+
+from NEMO.config import MULTI_MODEL_FOR_HYBRID
+from NEMO.nemo import run_ner_model
 texts = [
     'לייבניץ היה מתמטיקאי ופילוסוף.\n מרטין היידיגר התכתב עם חנה ארדנט.\n פילוסופיה היא שאלה',
 ]
 
 class NemoHebrewNer():
-    def __init__(self):
-        self.loaded_models = load_all_models()
 
     def get_hebrew_nemo_ner(self, text_input: str):
         '''
@@ -18,14 +17,17 @@ class NemoHebrewNer():
         if not text_input:
             return None
 
-        vanilla_ner_model_result = run_ner_model_direct(text_input, model=self.loaded_models['token-multi'],
-                                                        model_name='token-multi')
-        print('vanilla_ner_model_result', vanilla_ner_model_result)
+        # vanilla_ner_model_result = run_ner_model(text_input, model=self.loaded_models['token-multi'],
+        #                                                model_name='token-multi'
+
+
+        v2 = run_ner_model(MULTI_MODEL_FOR_HYBRID,text_input, "/tetst.txt")
+        print('vanilla_ner_model_result', v2)
 
         # text_entity_tuple_list_v = list(zip(vanilla_ner_model_result['tokenized_text'][0], vanilla_ner_model_result['nemo_predictions'][0]))
-        text_entity_tuple_list = [list(zip(vanilla_ner_model_result['tokenized_text'][i],
-                                           vanilla_ner_model_result['nemo_predictions'][i]))
-                                  for i in range(vanilla_ner_model_result['sentences_number'])]
+        text_entity_tuple_list = [list(zip(v2['tokenized_text'][i],
+                                           v2['nemo_predictions'][i]))
+                                  for i in range(v2['sentences_number'])]
 
         flatten_list = [item for sublist in text_entity_tuple_list for item in sublist]
         output_entities_list = []
