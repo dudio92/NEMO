@@ -27,7 +27,8 @@ def tokenize_text(text):
     for line in text.split('\n'):
         if line.strip():
             toks = bclm.tokenize(line.rstrip())
-            sents.append(toks)
+            if len(toks):
+                sents.append(toks)
     return sents
         
 def read_lattice(lattice):
