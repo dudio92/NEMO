@@ -54,9 +54,12 @@ def get_ner_fmeasure(golden_lists, predict_lists, label_type="BMES"):
         f_measure = -1
     else:
         f_measure = 2*precision*recall/(precision+recall)
-    accuracy = (right_tag+0.0)/all_tag
+    if all_tag != 0:
+        accuracy = (right_tag+0.0)/all_tag
+    else:
+        accuracy = 1
     # print "Accuracy: ", right_tag,"/",all_tag,"=",accuracy
-    if  label_type.upper().startswith("B-"):
+    if label_type.upper().startswith("B-"):
         print("gold_num = ", golden_num, " pred_num = ", predict_num, " right_num = ", right_num)
     else:
         print("Right token = ", right_tag, " All token = ", all_tag, " acc = ", accuracy)
